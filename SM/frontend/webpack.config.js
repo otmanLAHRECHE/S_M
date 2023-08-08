@@ -11,9 +11,6 @@ module.exports = {
       template: "src/index.html", // to import index.html file inside index.js
     }),
   ],
-  devServer: {
-    port: 3030, // you can change the port
-  },
   module: {
     rules: [
       {
