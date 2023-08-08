@@ -21,6 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('frontend.urls')),
     path('accounts/', include('accounts.urls')),
-    path('app/', include('app.urls')),
     re_path(r'^(?:.*)/?$', include('frontend.urls')),
 ]

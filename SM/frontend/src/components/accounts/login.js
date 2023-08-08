@@ -109,7 +109,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://img.freepik.com/premium-photo/pharmacist-holding-medicine-box-capsule-pack-pharmacy-drugstore_67340-24.jpg?w=996)',
+            backgroundImage: 'url(https://www.itarian.com/images/computer-inventory.png)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -131,7 +131,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Pharm_Up authentification
+              Info stock management
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField

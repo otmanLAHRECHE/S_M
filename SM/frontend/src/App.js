@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import DashboardContent from "./app/Dashboard";
-import PrivateRoute from "./common/private_route";
-import SignInSide from "./accounts/login";
+import DashboardContent from "./components/app/Dashboard";
+import PrivateRoute from "./components/common/private_route";
+import SignInSide from "./components/accounts/login";
 
 export default class App extends Component {
   constructor(props) {
