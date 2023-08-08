@@ -3,12 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   output: {
-    path: path.join(__dirname, "/dist"), // the bundle output path
+    path: path.join(__dirname, "./static/front"), // the bundle output path
     filename: "bundle.js", // the name of the bundle
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "src/index.html", // to import index.html file inside index.js
+      template: "templates/front/index.html", // to import index.html file inside index.js
     }),
   ],
   module: {
