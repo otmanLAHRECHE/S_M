@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import image from '../../assets/images/image.jpg'
 
 import { login_api } from '../../actions/authentification';
 import Alt from '../layouts/alert';
@@ -25,8 +26,8 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://github.com/otmanLAHRECHE">
-         Info stock management 1.1.0 
-      </Link>{' '}-- created by otman LAHRECHE 
+         EPSP Djanet Serologie 1.1.0 
+      </Link>{' '}-- Developed by otman LAHRECHE 
       {'.'}
     </Typography>
   );
@@ -109,14 +110,15 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://www.itarian.com/images/computer-inventory.png)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
-        />
+        >
+          <img src={image}/>
+        </Grid>
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
@@ -131,7 +133,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Info stock management
+              EPSP Serologie
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField

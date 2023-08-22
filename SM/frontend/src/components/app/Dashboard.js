@@ -108,7 +108,7 @@ function DashboardContent() {
     setOpen(!open);
   };
 
-  const [toolBar,setToolBar] = React.useState("Historique")
+  const [toolBar,setToolBar] = React.useState("Statestiques")
 
 
   const [logOut, setLogOut] = React.useState(false);
@@ -132,40 +132,20 @@ function DashboardContent() {
 
   const clickDashboard = () =>{
     
-      setPage([true,false,false,false,false])
-      setToolBar("Historique")
+      setPage([true,false])
+      setToolBar("Statestiques")
   };
 
   const clickSortie= () =>{
   
-    setPage([false,true,false,false,false])
-    setToolBar("Bons de sortie")
+    setPage([false,true])
+    setToolBar("Examens")
    
   
   };
 
-  const clickStock = () =>{
   
-    setPage([false,false,true,false,false])
-    setToolBar("Stock")
-  
-  };
-  const clickService= () =>{
-  
-    setPage([false,false,false,true,false])
-    setToolBar("Services")
-  
-  };
-  const clickType= () =>{
-  
-    setPage([false,false,false,false,true])
-    setToolBar("Services")
-  
-  };
-  
-
-
-  const [page, setPage] = React.useState([true,false,false,false,false]);
+  const [page, setPage] = React.useState([true,false]);
   
   if(localStorage.getItem("auth_token")==null && logOut == true){
     window.location.reload();
@@ -245,39 +225,16 @@ function DashboardContent() {
                   <ListItemIcon>
                     <DashboardIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Historique"/>
+                  <ListItemText primary="Statestiques"/>
                 </ListItemButton>
                 <ListItemButton selected={page[1]} onClick={clickSortie}>
                   <ListItemIcon>
-                    <OutputIcon />
+                    <VaccinesIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Bon de sortie" />
+                  <ListItemText primary="Examens" />
                 </ListItemButton>
-                <ListItemButton selected={page[2]} onClick={clickStock}>
-                  <ListItemIcon>
-                    <TextSnippetIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Stock" />
-                </ListItemButton>
-                
                 
             <Divider sx={{ my: 1 }} />
-                    <ListSubheader component="div" inset>
-                      Autre options
-                    </ListSubheader>
-                    <ListItemButton selected={page[3]} onClick={clickService}>
-                      <ListItemIcon>
-                        <VaccinesIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Services" />
-                    </ListItemButton>
-                    <ListItemButton selected={page[4]} onClick={clickType}>
-                      <ListItemIcon>
-                        <VaccinesIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Type d'article" />
-                    </ListItemButton>
-                    
                     
           </List>
         </Drawer>
@@ -298,13 +255,7 @@ function DashboardContent() {
         
         {page[0] ? <Historic/> : null}
         {page[1] ? <Historic/> : null}
-        {page[2] ? <Historic/> : null}
-        {page[3] ? <Historic/> : null}
-        {page[4] ? <Historic/> : null}
         
-
-        
-          
         </Box>
       </Box>
 

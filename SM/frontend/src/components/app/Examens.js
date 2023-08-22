@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 
 
 
-export default function Historic(){
+export default function Examens(){
     const theme = useTheme
 
     function Copyright(props) {
