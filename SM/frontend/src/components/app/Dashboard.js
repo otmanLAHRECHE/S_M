@@ -46,9 +46,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Historic from './Historique';
+import Examens from './Examens';
 
 
-const drawerWidth = 240;
+const drawerWidth = 170;
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -254,7 +255,7 @@ function DashboardContent() {
 
         
         {page[0] ? <Historic/> : null}
-        {page[1] ? <Historic/> : null}
+        {page[1] ? <Examens/> : null}
         
         </Box>
       </Box>

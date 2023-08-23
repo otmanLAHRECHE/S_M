@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState, useRef, useEffect} from 'react';
-import {Navigate} from 'react-router-dom';
+import { useNavigate, Navigate } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,6 +37,8 @@ const theme = createTheme();
 
 export default function SignInSide() {
 
+
+  const navigate = useNavigate();
   const [loged, setLoged] = useState(false)
   const [alert, setAlert] = useState(false)
   const [error_email, setErrorEmail] = useState([])
@@ -95,9 +97,9 @@ export default function SignInSide() {
 
   };
 
-  if (localStorage.getItem("auth_token") && loged == true) {
-    console.log("navigate")
-    return <Navigate to="/"/>;
+  if (localStorage.getItem("auth_token")) {
+    console.log("navigate");
+    return <Navigate to="/"/>
   }else{
   return (
     <>
