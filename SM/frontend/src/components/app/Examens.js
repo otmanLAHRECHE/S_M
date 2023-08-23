@@ -99,6 +99,34 @@ const getHoverBackgroundColor = (color, mode) =>
 
   export default function Examens(){
 
+    const [enrgNbrError, setEnrgNbrError] = React.useState([false, ""]);
+    const [enrgNbr, setEnrgNbr] = React.useState("");
+    const [name, setName] = React.useState("");
+    const [nameError, setNameError] = React.useState([false, ""]);
+    const [prenom, setPrenom] = React.useState("");
+    const [prenomError, setPrenomError] = React.useState([false, ""]);
+    const [genre, setGenre] = React.useState(null);
+    const [genreError, setGenreError] = React.useState([false, ""]);
+    const [dateNaissance, setDateNaissance] = React.useState("");
+    const [dateNaissanceError, setDateNaissanceError] = React.useState([false, ""]);
+    const [dateTest, setDateTest] = React.useState("");
+    const [dateTestError, setDateTestError] = React.useState([false, ""]);
+    const [HIVTest, setHIVTest] = React.useState(null);
+    const [HIVTestError, setHIVTestError] = React.useState([false, ""]);
+    const [HBSTest, setHBSTest] = React.useState(null);
+    const [HBSTestError, setHBSTestError] = React.useState([false, ""]);
+    const [HCVTest, setHCVTest] = React.useState(null);
+    const [HCVTestError, setHCVTestError] = React.useState([false, ""]);
+    const [BWTest, setBWTest] = React.useState(null);
+    const [BWTestError, setBWTestError] = React.useState([false, ""]);
+    const [TOXOPLASMETest, setTOXOPLASMETest] = React.useState(null);
+    const [TOXOPLASMETestError, setTOXOPLASMETestError] = React.useState([false, ""]);
+    const [RUBIOLETest, setRUBIOLETest] = React.useState(null);
+    const [RUBIOLETestError, setRUBIOLETestError] = React.useState([false, ""]);
+    const [observation, setObservation] = React.useState(null);
+    const [observationError, setObservationError] = React.useState([false, ""]);
+    
+
     
     const [dateFilter, setDateFilter] = React.useState(dayjs());
     const [dateFilterNotErr, setDateFilterNotErr] = React.useState(false);
@@ -117,10 +145,18 @@ const getHoverBackgroundColor = (color, mode) =>
 
     const handleChangeFilterDate = (newValue) =>{
         setDateFilter(newValue);
+      };
 
+      const handleChangeDateNaissance = (newValue) =>{
+        setDateNaissance(newValue);
+      };
+
+      const handleChangeDateTest = (newValue) =>{
+        setDateTest(newValue);
       };
 
       const addExamenOpen = () =>{
+        setOpen(true);
 
       };
 
@@ -255,6 +291,213 @@ const getHoverBackgroundColor = (color, mode) =>
           </Grid>
         </Grid>
         <Copyright sx={{ pt: 4 }} />
+
+
+
+        <Dialog open={open} onClose={addExamenClose}  maxWidth="lg" fullWidth={true}>
+                  <DialogTitle>Ajouter un exemen</DialogTitle>
+                    <DialogContent>
+                      <Grid container spacing={2}>
+                                        <Grid item xs={4}>
+                                          <TextField
+                                                  error={enrgNbrError[0]}
+                                                  helperText={enrgNbrError[1]}
+                                                  margin="dense"
+                                                  id="No_d_enregistrement"
+                                                  label="No d'enregistrement"
+                                                  fullWidth
+                                                  variant="standard"
+                                                  type="number"
+                                                  value={enrgNbr}
+                                                  onChange={(event) => {setEnrgNbr(event.target.value)}}
+                                          />
+
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                        <TextField
+                                                  error={nameError[0]}
+                                                  helperText={nameError[1]}
+                                                  margin="dense"
+                                                  id="Nom_de_malade"
+                                                  label="Nom de malade"
+                                                  fullWidth
+                                                  variant="standard"
+                                                  onChange={(event) => {setName(event.target.value)}}
+                                          />
+                                        
+                                        </Grid>
+
+                                        <Grid item xs={4}>
+                                        <TextField
+                                                  error={prenameError[0]}
+                                                  helperText={prenameError[1]}
+                                                  margin="dense"
+                                                  id="No_d_enregistrement"
+                                                  label="Prenom de malade"
+                                                  fullWidth
+                                                  variant="standard"
+                                                  onChange={(event) => {setPrename(event.target.value)}}
+                                          />
+                                                 
+                                        
+                                        </Grid>
+
+                        
+                      </Grid>
+
+                      <br></br> 
+
+                      <Grid container spacing={2}>
+                                        <Grid item xs={4}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DesktopDatePicker
+                                                        label="Date de naissanse"
+                                                        inputFormat="DD/MM/YYYY"
+                                                        value={dateNaissance}
+                                                        onChange={handleChangeDateN}
+                                                        renderInput={(params) => <TextField {...params} error={dateNaissanceError[0]}
+                                                        helperText={dateNaissanceError[1]} 
+                                                        required/>}
+                                                />
+
+                                            </LocalizationProvider>
+
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                        <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">Genre</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={genreError[0]} helperText={genreError[1]}
+                                            onChange={change_type}>
+                                              <MenuItem value="">
+                                                <em>None</em>
+                                              </MenuItem>
+                                              <MenuItem value={1}>homme</MenuItem>
+                                              <MenuItem value={2}>famme</MenuItem>
+                                            
+
+                                            </Select>
+                                </FormControl>   
+                                        
+                                        </Grid>
+
+                                        <Grid item xs={4}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DesktopDatePicker
+                                                        label="Date de prélèvement"
+                                                        inputFormat="DD/MM/YYYY"
+                                                        value={date}
+                                                        onChange={handleChangeDatePR}
+                                                        renderInput={(params) => <TextField {...params} error={dateError[0]}
+                                                        helperText={dateError[1]} 
+                                                        required/>}
+                                                />
+
+                                            </LocalizationProvider>
+                                                 
+                                        
+                                        </Grid>
+
+                        
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                                        <Grid item xs={4}>
+                                        <Autocomplete
+                                                    disablePortal
+                                                    value={infPrelevement}
+                                                    onChange={(event, newVlue) =>{
+                                                        setInfPrelevement(newVlue);
+                                                        
+                                                    }}
+                                                    options={allInfPrelevement}
+                                                    renderInput={(params) => <TextField {...params} error={infPrelevementError[0]}
+                                                    helperText={infPrelevementError[1]} fullWidth variant="standard" label="Infirmier de prélèvement" 
+                                                    required/>}
+                                                />  
+                                        
+
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                        <Autocomplete
+                                                    disablePortal
+                                                    value={testType}
+                                                    onChange={async (event, newVlue) =>{
+                                                        setTestType(newVlue);
+
+                                                        if (newVlue != null){
+                                                          const token = localStorage.getItem("auth_token");
+                                                          setTestesData(await getTestesForSelectedType(token, newVlue.label));
+                                                        }
+                                                        else{
+                                                          setAllTestes([]);
+                                                          setTestes(null);
+                                                        }
+                                                        
+                                                    }}
+                                                    options={allTestTypes}
+                                                    renderInput={(params) => <TextField {...params} error={testTypeError[0]}
+                                                    helperText={testTypeError[1]} fullWidth variant="standard" label="Type de examen" 
+                                                    required/>}
+                                                />  
+                                        
+                                        </Grid>
+
+                                        <Grid item xs={4}>
+                                        <TextField
+                                                  error={docNameError[0]}
+                                                  helperText={docNameError[1]}
+                                                  margin="dense"
+                                                  id="No_d_enregistrement"
+                                                  label="Medecin d'analyse"
+                                                  fullWidth
+                                                  variant="standard"
+                                                  onChange={(event) => {setDocName(event.target.value)}}
+                                          />          
+                                        
+                                        </Grid>
+
+                                        <Grid item xs={12}>
+                                          <Autocomplete
+                                                multiple
+                                                id="checkboxes-tags-demo"
+                                                options={allTestes}
+                                                disableCloseOnSelect
+                                                getOptionLabel={(option) => option.exam_test}
+                                                onChange={(event, newVlue) =>{
+                                                  console.log(newVlue);
+                                                  setTestes(newVlue);
+                                                  
+                                              }}
+                                                renderOption={(props, option, { selected }) => (
+                                                  <li {...props}>
+                                                    <Checkbox
+                                                      icon={icon}
+                                                      checkedIcon={checkedIcon}
+                                                      style={{ marginRight: 8 }}
+                                                      checked={selected}
+                                                    />
+                                                    {option.exam_test}
+                                                  </li>
+                                                )}
+                                                style={{ width: 500 }}
+                                                renderInput={(params) => (
+                                                  <TextField {...params} label="Les testes d'examen" placeholder="Teste" error={testesError[0]}
+                                                  helperText={testesError[1]}/>
+                                                )}
+                                              />       
+                                        
+                                        </Grid>
+
+                           
+                      </Grid>
+                    </DialogContent>
+                              <DialogActions>
+                                <Button onClick={addExamenClose}>Anuller</Button>
+                                <Button onClick={addExamenSave}>Sauvgarder</Button>
+                              </DialogActions>   
+
+                    
+            </Dialog>
 
 
         
