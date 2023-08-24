@@ -36,8 +36,10 @@ import Container from '@mui/material/Container';
 import Alt from '../layouts/alert';
 import { internal_processStyles } from '@mui/styled-engine';
 import ExamenItemsList from './Tests';
-import { getAllExamenOfYear, addNewExemen, updateExemen, deleteExemen } from '../../actions/examenActions'
+import { getAllExamenOfYear, addNewExemen, updateExemen, deleteExemen, getSelectedExemen } from '../../actions/examenActions'
 
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import FormControl from '@mui/material/FormControl';
 
 import Select from '@mui/material/Select';
@@ -142,6 +144,18 @@ const getHoverBackgroundColor = (color, mode) =>
     const [open, setOpen] = React.useState(false);
     const [loadError, setLoadError ] = React.useState(false);
     const [response, setResponse] = React.useState("");
+    
+    const [openUpdate, setOpenUpdate] = React.useState(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
+
+    
+    const [genreValue, setGenreValue] = React.useState();
+    const [HIVValue, setHIVValue] = React.useState();
+    const [HBSValue, setHBSValue] = React.useState();
+    const [HCVValue, setHCVValue] = React.useState();
+    const [BWValue, setBWValue] = React.useState();
+    const [TOXOPLASMEValue, setTOXOPLASMEValue] = React.useState();
+    const [RUBIOLEValue, setRUBIOLEValue] = React.useState();
 
     const handleChangeFilterDate = (newValue) =>{
         setDateFilter(newValue);
@@ -155,20 +169,377 @@ const getHoverBackgroundColor = (color, mode) =>
         setDateTest(newValue);
       };
 
+      const changeGenre = (event) => {
+        if (event.target.value == 1){
+          setGenre("Homme")
+        }else if (event.target.value == 2){
+          setGenre("Famme")
+        }
+    };
+
+    const changeTest1 = (event) => {
+      if (event.target.value == 0){
+        setHIVTest("no");
+      }
+      else if (event.target.value == 1){
+        setHIVTest("p");
+      }else if (event.target.value == 2){
+        setHIVTest("n");
+      }
+  };
+
+  const changeTest2 = (event) => {
+    if (event.target.value == 0){
+      setHBSTest("no");
+    }
+    else if (event.target.value == 1){
+      setHBSTest("p");
+    }else if (event.target.value == 2){
+      setHBSTest("n");
+    }
+};
+
+const changeTest3 = (event) => {
+  if (event.target.value == 0){
+    setHCVTest("no");
+  }
+  else if (event.target.value == 1){
+    setHCVTest("p");
+  }else if (event.target.value == 2){
+    setHCVTest("n");
+  }
+};
+
+const changeTest4 = (event) => {
+  if (event.target.value == 0){
+    setBWTest("no");
+  }
+  else if (event.target.value == 1){
+    setBWTest("p");
+  }else if (event.target.value == 2){
+    setBWTest("n");
+  }
+};
+
+const changeTest5 = (event) => {
+  if (event.target.value == 0){
+    setTOXOPLASMETest("no");
+  }
+  else if (event.target.value == 1){
+    setTOXOPLASMETest("p");
+  }else if (event.target.value == 2){
+    setTOXOPLASMETest("n");
+  }
+};
+
+const changeTest6 = (event) => {
+  if (event.target.value == 0){
+    setRUBIOLETest("no");
+  }
+  else if (event.target.value == 1){
+    setRUBIOLETest("p");
+  }else if (event.target.value == 2){
+    setRUBIOLETest("n");
+  }
+};
+
       const addExamenOpen = () =>{
         setOpen(true);
+        setName("");
+        setPrenom("");
+        setEnrgNbr("");
+        setGenre(null);
+        setDateNaissance("");
+        setDateTest("");
+        setHIVTest(null);
+        setHBSTest(null);
+        setHCVTest(null);
+        setBWTest(null);
+        setTOXOPLASMETest(null);
+        setRUBIOLETest(null);
+        setObservation("");
+
+        setNameError([false, ""]);
+        setPrenomError([false, ""]);
+        setEnrgNbrError([false, ""]);
+        setGenreError([false, ""]);
+        setDateNaissanceError([false, ""]);
+        setDateTestError([false, ""]);
+        setHIVTestError([false, ""]);
+        setHBSTestError([false, ""]);
+        setHCVTestError([false, ""]);
+        setBWTestError([false, ""]);
+        setTOXOPLASMETestError([false, ""]);
+        setRUBIOLETestError([false, ""]);
+        setObservationError([false, ""]);
 
       };
 
-      const editExamenOpen = () =>{
+      const editExamenOpen = async() =>{
+        if(selectionModel.length == 0){
+          setSelectionError(true);
+        }else{
+        setName("");
+        setPrenom("");
+        setEnrgNbr("");
+        setGenre(null);
+        setDateNaissance("");
+        setDateTest("");
+        setHIVTest(null);
+        setHBSTest(null);
+        setHCVTest(null);
+        setBWTest(null);
+        setTOXOPLASMETest(null);
+        setRUBIOLETest(null);
+        setObservation("");
+
+        setNameError([false, ""]);
+        setPrenomError([false, ""]);
+        setEnrgNbrError([false, ""]);
+        setGenreError([false, ""]);
+        setDateNaissanceError([false, ""]);
+        setDateTestError([false, ""]);
+        setHIVTestError([false, ""]);
+        setHBSTestError([false, ""]);
+        setHCVTestError([false, ""]);
+        setBWTestError([false, ""]);
+        setTOXOPLASMETestError([false, ""]);
+        setRUBIOLETestError([false, ""]);
+        setObservationError([false, ""]);
+
+        const token = localStorage.getItem("auth_token");
+
+        setRowData(await getSelectedExemen(token, selectionModel[0])); 
+
+        }
+
+      };
+
+      const editExamenSave = () =>{
+
+      }
+
+      const addExamenClose = () =>{
+        setOpen(false);
+      };
+
+      const editExamenClose = () =>{
+        setOpenUpdate(false);
+      };
+
+      const addExamenSave = async() =>{
+        var test = true;
+
+        setNameError([false, ""]);
+        setPrenomError([false, ""]);
+        setEnrgNbrError([false, ""]);
+        setGenreError([false, ""]);
+        setDateNaissanceError([false, ""]);
+        setDateTestError([false, ""]);
+        setHIVTestError([false, ""]);
+        setHBSTestError([false, ""]);
+        setHCVTestError([false, ""]);
+        setBWTestError([false, ""]);
+        setTOXOPLASMETestError([false, ""]);
+        setRUBIOLETestError([false, ""]);
+        setObservationError([false, ""]);
+
+        if(enrgNbr == "" || enrgNbr == 0){
+          test = false;
+          setEnrgNbrError([true, "erreur sur ce champ"]);
+        }
+        if(name =="" || name == null){
+          test = false;
+          setNameError([true, "champ est obligatoire"]);
+        }
+
+        if(prenom =="" || prenom == null){
+          test = false;
+          setPrenomError([true, "champ est obligatoire"]);
+        }
+
+        if(genre == "" || genre ==null){
+          test = false;
+          setGenreError([true, "champ est obligatoire"]);
+        }
+
+        if(dateNaissance == null || dateNaissance == ""){
+          test = false;
+          setDateNaissanceError([true, "champ est obligatoire"]);
+        }else if(dateNaissance.isValid() == false){
+          test = false;
+          setDateNaissanceError([true, "date n est pas valide"]);
+        }
+
+        if(dateTest == null || dateTest == ""){
+          test = false;
+          setDateTestError([true, "champ est obligatoire"]);
+        }else if(dateTest.isValid() == false){
+          test = false;
+          setDateTestError([true, "date n est pas valide"]);
+        }
+
+        if(HIVTest == "" || HIVTest == null){
+          test = false;
+          setHIVTestError([true, "champ est obligatoire"]);
+        }
+        if(HBSTest == "" || HBSTest == null){
+          test = false;
+          setHBSTestError([true, "champ est obligatoire"]);
+        }
+        if(HCVTest == "" || HCVTest == null){
+          test = false;
+          setHCVTestError([true, "champ est obligatoire"]);
+        }
+        if(BWTest == "" || BWTest == null){
+          test = false;
+          setBWTestError([true, "champ est obligatoire"]);
+        }
+        if(TOXOPLASMETest == "" || TOXOPLASMETest == null){
+          test = false;
+          setTOXOPLASMETestError([true, "champ est obligatoire"]);
+        }
+        if(RUBIOLETest == "" || RUBIOLETest == null){
+          test = false;
+          setRUBIOLETestError([true, "champ est obligatoire"]);
+        }
+
+        if(test){
+          var mTest = dateTest.get('month')+1;
+          const dTest = dateTest.get('date') +"/"+ mTest +"/"+dateTest.get('year');
+
+          var mNaissance = dateNaissance.get('month')+1;
+          const dNaissance = dateNaissance.get('date') +"/"+ mNaissance +"/"+dateNaissance.get('year');
+
+          const data = {
+            "no_registre": Number(enrgNbr),
+            "name": name,
+            "prenom": prenom,
+            "patient_genre": genre,
+            "date_naissance": dNaissance,
+            "date_test": dTest,
+            "HIV_test": HIVTest,
+            "HBS_test": HBSTest,
+            "HCV_test": HBSTest,
+            "BW_test": BWTest,
+            "TOXOPLASME_test": TOXOPLASMETest,
+            "RUBIOLE_test": RUBIOLETest,
+            "observation": observation,
+          }
+
+          const token = localStorage.getItem("auth_token");
+
+          setResponse(await addNewExemen(token, JSON.stringify(data)))
+
+        }else{
+          console.log("error");
+          setLoadError(true);
+        }
+
+
 
       };
 
       const deleteExamenOpen = () =>{
-
-
-
+          setOpenDelete(true);
       }
+
+      React.useEffect(() => {
+        console.log(rowData);
+        try{
+          
+          if (rowData == "no data"){
+            setResponseErrorSignal(true);
+          } else if(rowData != "") {
+
+          setOpenUpdate(true);
+
+          setName(rowData.name);
+          setPrenom(rowData.prenom);
+          setEnrgNbr(rowData.no_registre);
+          setGenre(rowData.patient_genre);
+          if(rowData.patient_genre == "homme"){
+            setGenreValue(1);
+          }else{
+            setGenreValue(2);
+          }
+          setDateNaissance(dayjs(rowData.date_naissance, 'YYYY-MM-DD'));
+          setDateTest(dayjs(rowData.date_test, 'YYYY-MM-DD'));
+          setHIVTest(rowData.HIV_test);
+          if(rowData.HIV_test == "no"){
+              setHIVValue(0);
+          }else if(rowData.HIV_test == "p"){
+            setHIVValue(1);
+          }else{
+            setHIVValue(2);
+          }
+          setHBSTest(rowData.HBS_test);
+          if(rowData.HBS_test == "no"){
+              setHBSValue(0);
+          }else if(rowData.HBS_test == "p"){
+            setHBSValue(1);
+          }else{
+            setHBSValue(2);
+          }
+
+          setHCVTest(rowData.HCV_test);
+          if(rowData.HCV_test == "no"){
+            setHCVValue(0);
+          }else if(rowData.HCV_test == "p"){
+            setHCVValue(1);
+          }else{
+            setHCVValue(2);
+          }
+
+          setBWTest(rowData.BW_test);
+          if(rowData.BW_test == "no"){
+            setBWValue(0);
+          }else if(rowData.BW_test == "p"){
+            setBWValue(1);
+          }else{
+            setBWValue(2);
+          }
+
+          setTOXOPLASMETest(rowData.TOXOPLASME_test);
+          if(rowData.TOXOPLASME_test == "no"){
+            setTOXOPLASMEValue(0);
+          }else if(rowData.TOXOPLASME_test == "p"){
+            setTOXOPLASMEValue(1);
+          }else{
+            setTOXOPLASMEValue(2);
+          }
+
+          setRUBIOLETest(rowData.RUBIOLE_test);
+          if(rowData.RUBIOLE_test == "no"){
+            setRUBIOLEValue(0);
+          }else if(rowData.RUBIOLE_test == "p"){
+            setRUBIOLEValue(1);
+          }else{
+            setRUBIOLEValue(2);
+          }
+          setObservation(rowData.observation);
+
+          setNameError([false, ""]);
+        setPrenomError([false, ""]);
+        setEnrgNbrError([false, ""]);
+        setGenreError([false, ""]);
+        setDateNaissanceError([false, ""]);
+        setDateTestError([false, ""]);
+        setHIVTestError([false, ""]);
+        setHBSTestError([false, ""]);
+        setHCVTestError([false, ""]);
+        setBWTestError([false, ""]);
+        setTOXOPLASMETestError([false, ""]);
+        setRUBIOLETestError([false, ""]);
+        setObservationError([false, ""]);
+  
+  
+          }
+        }catch(e){
+          console.log(e)
+        }
+  
+      }, [rowData]);
 
 
       React.useEffect(() => {
@@ -190,8 +561,9 @@ const getHoverBackgroundColor = (color, mode) =>
         const fetchData = async () => {
           try {
             const token = localStorage.getItem("auth_token");
-            var year = dateFilter.get('year')
-            setData(await getAllExamenOfYear(token, year));
+            var year = dateFilter.get('year');
+            var month = dateFilter.get('month')+1;
+            setData(await getAllExamenOfYear(token, month, year));
             setLoading(false);
           } catch (error) {
             console.log("error", error);
@@ -223,8 +595,8 @@ const getHoverBackgroundColor = (color, mode) =>
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DesktopDatePicker
-                                                    views={['year']}
-                                                    label="Selectioner l'anné"
+                                                    views={['year', 'month']}
+                                                    label="Selectioner le mois"
                                                     value={dateFilter}
                                                     onChange={handleChangeFilterDate}
                                                     renderInput={(params) => <TextField {...params} error={dateFilterError[0]}
@@ -280,10 +652,11 @@ const getHoverBackgroundColor = (color, mode) =>
                           loading={loading}
                           getRowHeight={() => 'auto'}
                           disableMultipleSelection={true}
-                          onSelectionModelChange={(newSelectionModel) => {
-                            setSelectionModel(newSelectionModel);
+                          onRowSelectionModelChange={(newRowSelectionModel) => {
+                            setSelectionModel(newRowSelectionModel);
+                            console.log(newRowSelectionModel);
                           }}
-                          selectionModel={selectionModel}
+                          rowSelectionModel={selectionModel}
                           
                       />
                 </div>   
@@ -310,6 +683,7 @@ const getHoverBackgroundColor = (color, mode) =>
                                                   type="number"
                                                   value={enrgNbr}
                                                   onChange={(event) => {setEnrgNbr(event.target.value)}}
+                                                  required
                                           />
 
                                         </Grid>
@@ -323,20 +697,22 @@ const getHoverBackgroundColor = (color, mode) =>
                                                   fullWidth
                                                   variant="standard"
                                                   onChange={(event) => {setName(event.target.value)}}
+                                                  required
                                           />
                                         
                                         </Grid>
 
                                         <Grid item xs={4}>
                                         <TextField
-                                                  error={prenameError[0]}
-                                                  helperText={prenameError[1]}
+                                                  error={prenomError[0]}
+                                                  helperText={prenomError[1]}
                                                   margin="dense"
                                                   id="No_d_enregistrement"
                                                   label="Prenom de malade"
                                                   fullWidth
                                                   variant="standard"
-                                                  onChange={(event) => {setPrename(event.target.value)}}
+                                                  onChange={(event) => {setPrenom(event.target.value)}}
+                                                  required
                                           />
                                                  
                                         
@@ -351,13 +727,8 @@ const getHoverBackgroundColor = (color, mode) =>
                                         <Grid item xs={4}>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DesktopDatePicker
-                                                        label="Date de naissanse"
-                                                        inputFormat="DD/MM/YYYY"
-                                                        value={dateNaissance}
-                                                        onChange={handleChangeDateN}
-                                                        renderInput={(params) => <TextField {...params} error={dateNaissanceError[0]}
-                                                        helperText={dateNaissanceError[1]} 
-                                                        required/>}
+                                                        label="Date de naissance"
+                                                        onChange={handleChangeDateNaissance}
                                                 />
 
                                             </LocalizationProvider>
@@ -366,8 +737,8 @@ const getHoverBackgroundColor = (color, mode) =>
                                         <Grid item xs={4}>
                                         <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
                                           <InputLabel required htmlFor="grouped-select">Genre</InputLabel>
-                                            <Select defaultValue="" id="grouped-select" label="Genre" error={genreError[0]} helperText={genreError[1]}
-                                            onChange={change_type}>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={genreError[0]}
+                                            onChange={changeGenre}>
                                               <MenuItem value="">
                                                 <em>None</em>
                                               </MenuItem>
@@ -376,20 +747,15 @@ const getHoverBackgroundColor = (color, mode) =>
                                             
 
                                             </Select>
-                                </FormControl>   
+                                       </FormControl>   
                                         
                                         </Grid>
 
                                         <Grid item xs={4}>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DesktopDatePicker
-                                                        label="Date de prélèvement"
-                                                        inputFormat="DD/MM/YYYY"
-                                                        value={date}
-                                                        onChange={handleChangeDatePR}
-                                                        renderInput={(params) => <TextField {...params} error={dateError[0]}
-                                                        helperText={dateError[1]} 
-                                                        required/>}
+                                                        label="Date d'examen"
+                                                        onChange={handleChangeDateTest}
                                                 />
 
                                             </LocalizationProvider>
@@ -400,100 +766,348 @@ const getHoverBackgroundColor = (color, mode) =>
                         
                       </Grid>
 
+                      <br></br> 
+
                       <Grid container spacing={2}>
                                         <Grid item xs={4}>
-                                        <Autocomplete
-                                                    disablePortal
-                                                    value={infPrelevement}
-                                                    onChange={(event, newVlue) =>{
-                                                        setInfPrelevement(newVlue);
-                                                        
-                                                    }}
-                                                    options={allInfPrelevement}
-                                                    renderInput={(params) => <TextField {...params} error={infPrelevementError[0]}
-                                                    helperText={infPrelevementError[1]} fullWidth variant="standard" label="Infirmier de prélèvement" 
-                                                    required/>}
-                                                />  
+                                        <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">HIV Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={HIVTestError[0]}
+                                            onChange={changeTest1}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl>  
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">HBS Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={HBSTestError[0]}
+                                            onChange={changeTest2}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">HCV Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={HCVTestError[0]} 
+                                            onChange={changeTest3}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">BW Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={BWTestError[0]} 
+                                            onChange={changeTest4}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">TOXOPLASME Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={TOXOPLASMETestError[0]} 
+                                            onChange={changeTest5}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">RUBIOLE Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={RUBIOLETestError[0]} 
+                                            onChange={changeTest6}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
                                         
-
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                        <Autocomplete
-                                                    disablePortal
-                                                    value={testType}
-                                                    onChange={async (event, newVlue) =>{
-                                                        setTestType(newVlue);
-
-                                                        if (newVlue != null){
-                                                          const token = localStorage.getItem("auth_token");
-                                                          setTestesData(await getTestesForSelectedType(token, newVlue.label));
-                                                        }
-                                                        else{
-                                                          setAllTestes([]);
-                                                          setTestes(null);
-                                                        }
-                                                        
-                                                    }}
-                                                    options={allTestTypes}
-                                                    renderInput={(params) => <TextField {...params} error={testTypeError[0]}
-                                                    helperText={testTypeError[1]} fullWidth variant="standard" label="Type de examen" 
-                                                    required/>}
-                                                />  
-                                        
                                         </Grid>
 
-                                        <Grid item xs={4}>
+                                        <Grid item xs={8}>
                                         <TextField
-                                                  error={docNameError[0]}
-                                                  helperText={docNameError[1]}
+                                                  error={observationError[0]}
+                                                  helperText={observationError[1]}
                                                   margin="dense"
                                                   id="No_d_enregistrement"
-                                                  label="Medecin d'analyse"
+                                                  label="Observation"
                                                   fullWidth
+                                                  multiline
+                                                  rows={4}
                                                   variant="standard"
-                                                  onChange={(event) => {setDocName(event.target.value)}}
+                                                  onChange={(event) => {setObservation(event.target.value)}}
                                           />          
                                         
                                         </Grid>
-
-                                        <Grid item xs={12}>
-                                          <Autocomplete
-                                                multiple
-                                                id="checkboxes-tags-demo"
-                                                options={allTestes}
-                                                disableCloseOnSelect
-                                                getOptionLabel={(option) => option.exam_test}
-                                                onChange={(event, newVlue) =>{
-                                                  console.log(newVlue);
-                                                  setTestes(newVlue);
-                                                  
-                                              }}
-                                                renderOption={(props, option, { selected }) => (
-                                                  <li {...props}>
-                                                    <Checkbox
-                                                      icon={icon}
-                                                      checkedIcon={checkedIcon}
-                                                      style={{ marginRight: 8 }}
-                                                      checked={selected}
-                                                    />
-                                                    {option.exam_test}
-                                                  </li>
-                                                )}
-                                                style={{ width: 500 }}
-                                                renderInput={(params) => (
-                                                  <TextField {...params} label="Les testes d'examen" placeholder="Teste" error={testesError[0]}
-                                                  helperText={testesError[1]}/>
-                                                )}
-                                              />       
-                                        
-                                        </Grid>
-
                            
                       </Grid>
                     </DialogContent>
                               <DialogActions>
                                 <Button onClick={addExamenClose}>Anuller</Button>
                                 <Button onClick={addExamenSave}>Sauvgarder</Button>
+                              </DialogActions>   
+
+                    
+            </Dialog>
+
+
+
+            <Dialog open={openUpdate} onClose={editExamenClose}  maxWidth="lg" fullWidth={true}>
+                  <DialogTitle>Modifier un exemen</DialogTitle>
+                    <DialogContent>
+                      <Grid container spacing={2}>
+                                        <Grid item xs={4}>
+                                          <TextField
+                                                  error={enrgNbrError[0]}
+                                                  helperText={enrgNbrError[1]}
+                                                  margin="dense"
+                                                  id="No_d_enregistrement"
+                                                  label="No d'enregistrement"
+                                                  fullWidth
+                                                  variant="standard"
+                                                  type="number"
+                                                  value={enrgNbr}
+                                                  onChange={(event) => {setEnrgNbr(event.target.value)}}
+                                                  required
+                                          />
+
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                        <TextField
+                                                  error={nameError[0]}
+                                                  helperText={nameError[1]}
+                                                  margin="dense"
+                                                  id="Nom_de_malade"
+                                                  label="Nom de malade"
+                                                  fullWidth
+                                                  variant="standard"
+                                                  value={name}
+                                                  onChange={(event) => {setName(event.target.value)}}
+                                                  required
+                                          />
+                                        
+                                        </Grid>
+
+                                        <Grid item xs={4}>
+                                        <TextField
+                                                  error={prenomError[0]}
+                                                  helperText={prenomError[1]}
+                                                  margin="dense"
+                                                  id="No_d_enregistrement"
+                                                  label="Prenom de malade"
+                                                  fullWidth
+                                                  variant="standard"
+                                                  value={prenom}
+                                                  onChange={(event) => {setPrenom(event.target.value)}}
+                                                  required
+                                          />
+                                                 
+                                        
+                                        </Grid>
+
+                        
+                      </Grid>
+
+                      <br></br> 
+
+                      <Grid container spacing={2}>
+                                        <Grid item xs={4}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DesktopDatePicker
+                                                        label="Date de naissance"
+                                                        onChange={handleChangeDateNaissance}
+                                                        value={dateNaissance}
+                                                />
+
+                                            </LocalizationProvider>
+
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                        <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">Genre</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={genreError[0]}
+                                            onChange={changeGenre}
+                                            value={genreValue}>
+                                              <MenuItem value="">
+                                                <em>None</em>
+                                              </MenuItem>
+                                              <MenuItem value={1}>homme</MenuItem>
+                                              <MenuItem value={2}>famme</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl>   
+                                        
+                                        </Grid>
+
+                                        <Grid item xs={4}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DesktopDatePicker
+                                                        label="Date d'examen"
+                                                        onChange={handleChangeDateTest}
+                                                        value={dateTest}
+                                                />
+
+                                            </LocalizationProvider>
+                                                 
+                                        
+                                        </Grid>
+
+                        
+                      </Grid>
+
+                      <br></br> 
+
+                      <Grid container spacing={2}>
+                                        <Grid item xs={4}>
+                                        <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">HIV Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={HIVTestError[0]}
+                                            onChange={changeTest1}
+                                            value={HIVValue}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl>  
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">HBS Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={HBSTestError[0]}
+                                            onChange={changeTest2}
+                                            value={HBSValue}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">HCV Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={HCVTestError[0]} 
+                                            onChange={changeTest3}
+                                            value={HCVValue}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">BW Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={BWTestError[0]} 
+                                            onChange={changeTest4}
+                                            value={BWValue}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">TOXOPLASME Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={TOXOPLASMETestError[0]} 
+                                            onChange={changeTest5}
+                                            value={TOXOPLASMEValue}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                       <FormControl variant="standard" sx={{ m: 1, width: 300 }}>
+                                          <InputLabel required htmlFor="grouped-select">RUBIOLE Test</InputLabel>
+                                            <Select defaultValue="" id="grouped-select" label="Genre" error={RUBIOLETestError[0]} 
+                                            onChange={changeTest6}
+                                            value={RUBIOLEValue}>
+                                              <MenuItem value={0}>
+                                                None
+                                              </MenuItem>
+                                              <MenuItem value={1}>Positive +</MenuItem>
+                                              <MenuItem value={2}>Negative -</MenuItem>
+                                            
+
+                                            </Select>
+                                       </FormControl> 
+
+                                        
+                                        </Grid>
+
+                                        <Grid item xs={8}>
+                                        <TextField
+                                                  error={observationError[0]}
+                                                  helperText={observationError[1]}
+                                                  margin="dense"
+                                                  id="No_d_enregistrement"
+                                                  label="Observation"
+                                                  fullWidth
+                                                  multiline
+                                                  rows={4}
+                                                  variant="standard"
+                                                  value={observation}
+                                                  onChange={(event) => {setObservation(event.target.value)}}
+                                          />          
+                                        
+                                        </Grid>
+                           
+                      </Grid>
+                    </DialogContent>
+                              <DialogActions>
+                                <Button onClick={editExamenClose}>Anuller</Button>
+                                <Button onClick={editExamenSave}>Sauvgarder</Button>
                               </DialogActions>   
 
                     

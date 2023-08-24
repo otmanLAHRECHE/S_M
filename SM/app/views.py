@@ -10,13 +10,14 @@ from rest_framework import status
 # Create your views here.
 
 @api_view(['GET'])
-def getAllExamenOfYear(request, year):
+def getAllExamenOfYear(request, month, year):
     if request.method == 'GET' and request.user.is_authenticated:
 
-        range = monthrange(year, 12)
+        range = monthrange(year, month)
 
-        date_start = datetime.date(year , 1, 1)
-        date_end = datetime.date( year, 12, range[1])
+
+        date_start = datetime.date(year , month, 1)
+        date_end = datetime.date( year, month, range[1])
 
         queryset = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).order_by("-date_test")
 
@@ -46,6 +47,9 @@ def createNewExemen(request):
         RUBIOLE_test = request.data.pop('RUBIOLE_test')
         observation = request.data.pop('observation')
 
+        print(date_n)
+        print(date_t)
+
         date_naissance = date_n.split("/")
         date_test = date_t.split("/")
 
@@ -71,8 +75,8 @@ def createNewExemen(request):
 
         print(date_naissance)
         print(date_test)
-        date_naissance = datetime.date(int(date_naissance[0]), int(date_naissance[1]), int(date_naissance[2]))
-        date_test = datetime.date(int(date_test[0]), int(date_test[1]), int(date_test[2]))
+        date_naissance = datetime.date(int(date_naissance[2]), int(date_naissance[1]), int(date_naissance[0]))
+        date_test = datetime.date(int(date_test[2]), int(date_test[1]), int(date_test[0]))
 
 
         source = Exemen.objects.create(name = name, prenom = prenom, date_naissance=date_naissance, date_test=date_test, no_registre=no_registre, HIV_test=HIV_test, HBS_test=HBS_test, HCV_test=HCV_test, BW_test=BW_test, TOXOPLASME_test=TOXOPLASME_test, RUBIOLE_test=RUBIOLE_test, observation=observation, patient_genre=patient_genre)
