@@ -28,6 +28,7 @@ import Alt from '../layouts/alert';
 import ExamenItemsList from './Tests';
 import { getAllExamenOfYear, addNewExemen, updateExemen, deleteExemen, getSelectedExemen } from '../../actions/examenActions'
 
+import { useNavigate } from "react-router-dom";
 import FormControl from '@mui/material/FormControl';
 
 import Select from '@mui/material/Select';
@@ -74,6 +75,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
   export default function Examens(){
+
+    
+    const navigate = useNavigate();
 
     const [enrgNbrError, setEnrgNbrError] = React.useState([false, ""]);
     const [enrgNbr, setEnrgNbr] = React.useState("");
@@ -543,6 +547,10 @@ const changeTest6 = (event) => {
         setResponse(await deleteExemen(token, selectionModel[0])); 
       }
 
+      const printResult = () =>{
+        navigate("/bon_examen");
+      }
+
       React.useEffect(() => {
         console.log(rowData);
         try{
@@ -724,7 +732,7 @@ const changeTest6 = (event) => {
               <Button startIcon={<AddCircleOutline />} onClick={addExamenOpen}>Ajouter examen</Button>
               <Button startIcon={<EditAttributesIcon />} onClick={editExamenOpen}> Voir/Modifier</Button>
               <Button startIcon={<DeleteForeverIcon />} onClick={deleteExamenOpen}>Supprimer</Button>
-              <Button startIcon={<PrintIcon />} onClick={deleteExamenOpen}>Impr</Button>
+              <Button startIcon={<PrintIcon />} onClick={printResult}>Impr</Button>
             </ButtonGroup>
             </Box>
             
