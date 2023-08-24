@@ -66,8 +66,7 @@ export default function Historic(){
         }
       }, [dateFilter]);
 
-      
-      console.log(data);
+    
 
 
     return(

@@ -548,7 +548,17 @@ const changeTest6 = (event) => {
       }
 
       const printResult = () =>{
-        navigate("/bon_examen");
+
+        if(selectionModel.length == 0){
+          setSelectionError(true);
+        }else{   
+          navigate("/bon_examen",{
+            state: {
+              id: selectionModel[0]
+            }
+          });
+        }
+        
       }
 
       React.useEffect(() => {
@@ -759,7 +769,6 @@ const changeTest6 = (event) => {
                           disableMultipleSelection={true}
                           onRowSelectionModelChange={(newRowSelectionModel) => {
                             setSelectionModel(newRowSelectionModel);
-                            console.log(newRowSelectionModel);
                           }}
                           rowSelectionModel={selectionModel}
                           
