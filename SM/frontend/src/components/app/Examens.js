@@ -2,14 +2,10 @@ import * as React from 'react';
 import { useTheme, styled  } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { DataGrid, GridToolbar, GridActionsCellItem,GridToolbarContainer,GridToolbarFilterButton,} from '@mui/x-data-grid';
+import { DataGrid, GridToolbar} from '@mui/x-data-grid';
 import dayjs from 'dayjs';
 
-import Chip from '@mui/material/Chip';
-import SaveIcon from '@mui/icons-material/Save';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import Checkbox from '@mui/material/Checkbox';
+
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Link from '@mui/material/Link';
@@ -17,9 +13,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
-import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -27,19 +21,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import Autocomplete from '@mui/material/Autocomplete';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Typography from '@mui/material/Typography';
-import { darken, lighten } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Alt from '../layouts/alert';
-import { internal_processStyles } from '@mui/styled-engine';
 import ExamenItemsList from './Tests';
 import { getAllExamenOfYear, addNewExemen, updateExemen, deleteExemen, getSelectedExemen } from '../../actions/examenActions'
 
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import FormControl from '@mui/material/FormControl';
 
 import Select from '@mui/material/Select';
@@ -52,12 +40,6 @@ import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-const getBackgroundColor = (color, mode) =>
-  mode === 'dark' ? darken(color, 0.6) : lighten(color, 0.6);
-
-const getHoverBackgroundColor = (color, mode) =>
-  mode === 'dark' ? darken(color, 0.5) : lighten(color, 0.5);
 
 
   const columns = [
@@ -75,15 +57,7 @@ const getHoverBackgroundColor = (color, mode) =>
 
    },
   ];
-
-
-
   const theme = useTheme
-
-  const ListItem = styled('li')(({ theme }) => ({
-    margin: theme.spacing(0.5),
-  }));
-
 
   function Copyright(props) {
     return (
@@ -171,75 +145,96 @@ const getHoverBackgroundColor = (color, mode) =>
 
       const changeGenre = (event) => {
         if (event.target.value == 1){
-          setGenre("Homme")
+          setGenre("Homme");
+          setGenreValue(1);
+
         }else if (event.target.value == 2){
-          setGenre("Famme")
+          setGenre("Femme");
+          setGenreValue(2);
         }
     };
 
     const changeTest1 = (event) => {
       if (event.target.value == 0){
         setHIVTest("no");
+        setHIVValue(0);
       }
       else if (event.target.value == 1){
         setHIVTest("p");
+        setHIVValue(1);
       }else if (event.target.value == 2){
         setHIVTest("n");
+        setHIVValue(2);
       }
   };
 
   const changeTest2 = (event) => {
     if (event.target.value == 0){
       setHBSTest("no");
+      setHBSValue(0);
     }
     else if (event.target.value == 1){
       setHBSTest("p");
+      setHBSValue(1);
     }else if (event.target.value == 2){
       setHBSTest("n");
+      setHBSValue(2);
     }
 };
 
 const changeTest3 = (event) => {
   if (event.target.value == 0){
     setHCVTest("no");
+    setHCVValue(0);
   }
   else if (event.target.value == 1){
     setHCVTest("p");
+    setHCVValue(1);
   }else if (event.target.value == 2){
     setHCVTest("n");
+    setHCVValue(2);
   }
 };
 
 const changeTest4 = (event) => {
   if (event.target.value == 0){
     setBWTest("no");
+    setBWValue(0);
   }
   else if (event.target.value == 1){
     setBWTest("p");
+    setBWValue(1);
   }else if (event.target.value == 2){
     setBWTest("n");
+    setBWValue(2);
   }
 };
 
 const changeTest5 = (event) => {
   if (event.target.value == 0){
     setTOXOPLASMETest("no");
+    setTOXOPLASMEValue(0);
   }
   else if (event.target.value == 1){
     setTOXOPLASMETest("p");
+    setTOXOPLASMEValue(1);
   }else if (event.target.value == 2){
     setTOXOPLASMETest("n");
+    setTOXOPLASMEValue(2);
   }
 };
 
 const changeTest6 = (event) => {
   if (event.target.value == 0){
     setRUBIOLETest("no");
+    setRUBIOLEValue(0);
   }
   else if (event.target.value == 1){
     setRUBIOLETest("p");
+    setRUBIOLEValue(1);
   }else if (event.target.value == 2){
     setRUBIOLETest("n");
+    setRUBIOLEValue(2);
   }
 };
 
@@ -293,6 +288,14 @@ const changeTest6 = (event) => {
         setRUBIOLETest(null);
         setObservation("");
 
+        setGenreValue("");
+        setHIVValue("");
+        setHCVValue("");
+        setHBSValue("");
+        setBWValue("");
+        setTOXOPLASMEValue("");
+        setRUBIOLEValue("");
+
         setNameError([false, ""]);
         setPrenomError([false, ""]);
         setEnrgNbrError([false, ""]);
@@ -315,7 +318,103 @@ const changeTest6 = (event) => {
 
       };
 
-      const editExamenSave = () =>{
+      const editExamenSave = async() =>{
+
+        var test = true;
+
+        if(enrgNbr == "" || enrgNbr == 0){
+          test = false;
+          setEnrgNbrError([true, "erreur sur ce champ"]);
+        }
+        if(name =="" || name == null){
+          test = false;
+          setNameError([true, "champ est obligatoire"]);
+        }
+
+        if(prenom =="" || prenom == null){
+          test = false;
+          setPrenomError([true, "champ est obligatoire"]);
+        }
+
+        if(genre == "" || genre ==null){
+          test = false;
+          setGenreError([true, "champ est obligatoire"]);
+        }
+
+        if(dateNaissance == null || dateNaissance == ""){
+          test = false;
+          setDateNaissanceError([true, "champ est obligatoire"]);
+        }else if(dateNaissance.isValid() == false){
+          test = false;
+          setDateNaissanceError([true, "date n est pas valide"]);
+        }
+
+        if(dateTest == null || dateTest == ""){
+          test = false;
+          setDateTestError([true, "champ est obligatoire"]);
+        }else if(dateTest.isValid() == false){
+          test = false;
+          setDateTestError([true, "date n est pas valide"]);
+        }
+
+        if(HIVTest == "" || HIVTest == null){
+          test = false;
+          setHIVTestError([true, "champ est obligatoire"]);
+        }
+        if(HBSTest == "" || HBSTest == null){
+          test = false;
+          setHBSTestError([true, "champ est obligatoire"]);
+        }
+        if(HCVTest == "" || HCVTest == null){
+          test = false;
+          setHCVTestError([true, "champ est obligatoire"]);
+        }
+        if(BWTest == "" || BWTest == null){
+          test = false;
+          setBWTestError([true, "champ est obligatoire"]);
+        }
+        if(TOXOPLASMETest == "" || TOXOPLASMETest == null){
+          test = false;
+          setTOXOPLASMETestError([true, "champ est obligatoire"]);
+        }
+        if(RUBIOLETest == "" || RUBIOLETest == null){
+          test = false;
+          setRUBIOLETestError([true, "champ est obligatoire"]);
+        }
+
+        if(test){
+          var mTest = dateTest.get('month')+1;
+          const dTest = dateTest.get('date') +"/"+ mTest +"/"+dateTest.get('year');
+
+          var mNaissance = dateNaissance.get('month')+1;
+          const dNaissance = dateNaissance.get('date') +"/"+ mNaissance +"/"+dateNaissance.get('year');
+
+          const data = {
+            "no_registre": Number(enrgNbr),
+            "name": name,
+            "prenom": prenom,
+            "patient_genre": genre,
+            "date_naissance": dNaissance,
+            "date_test": dTest,
+            "HIV_test": HIVTest,
+            "HBS_test": HBSTest,
+            "HCV_test": HBSTest,
+            "BW_test": BWTest,
+            "TOXOPLASME_test": TOXOPLASMETest,
+            "RUBIOLE_test": RUBIOLETest,
+            "observation": observation,
+          }
+
+          const token = localStorage.getItem("auth_token");
+
+          setResponse(await updateExemen(token, JSON.stringify(data), rowData.id))
+
+        }else{
+          console.log("error");
+          setLoadError(true);
+        }
+
+
 
       }
 
@@ -329,20 +428,6 @@ const changeTest6 = (event) => {
 
       const addExamenSave = async() =>{
         var test = true;
-
-        setNameError([false, ""]);
-        setPrenomError([false, ""]);
-        setEnrgNbrError([false, ""]);
-        setGenreError([false, ""]);
-        setDateNaissanceError([false, ""]);
-        setDateTestError([false, ""]);
-        setHIVTestError([false, ""]);
-        setHBSTestError([false, ""]);
-        setHCVTestError([false, ""]);
-        setBWTestError([false, ""]);
-        setTOXOPLASMETestError([false, ""]);
-        setRUBIOLETestError([false, ""]);
-        setObservationError([false, ""]);
 
         if(enrgNbr == "" || enrgNbr == 0){
           test = false;
@@ -441,7 +526,21 @@ const changeTest6 = (event) => {
       };
 
       const deleteExamenOpen = () =>{
+        if(selectionModel.length == 0){
+          setSelectionError(true);
+        }else{   
           setOpenDelete(true);
+        }
+      };
+
+      const deleteExamenClose = () =>{
+        setOpenDelete(false);
+      };
+
+      const deleteConfirmation = async () =>{
+        setOpenDelete(false);
+        const token = localStorage.getItem("auth_token");
+        setResponse(await deleteExemen(token, selectionModel[0])); 
       }
 
       React.useEffect(() => {
@@ -458,7 +557,7 @@ const changeTest6 = (event) => {
           setPrenom(rowData.prenom);
           setEnrgNbr(rowData.no_registre);
           setGenre(rowData.patient_genre);
-          if(rowData.patient_genre == "homme"){
+          if(rowData.patient_genre == "Homme"){
             setGenreValue(1);
           }else{
             setGenreValue(2);
@@ -578,10 +677,8 @@ const changeTest6 = (event) => {
         }
 
         setOpen(false);
+        setOpenUpdate(false);
       }, [response, dateFilter]);
-
-
-
 
     return(
         <React.Fragment>
@@ -635,7 +732,7 @@ const changeTest6 = (event) => {
 
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column'}}>
-            <div style={{ height: 700, width: '100%' }}>
+            <div style={{ height: 2500, width: '100%' }}>
                       <DataGrid
                         components={{
                           Toolbar: GridToolbar,
@@ -743,7 +840,7 @@ const changeTest6 = (event) => {
                                                 <em>None</em>
                                               </MenuItem>
                                               <MenuItem value={1}>homme</MenuItem>
-                                              <MenuItem value={2}>famme</MenuItem>
+                                              <MenuItem value={2}>femme</MenuItem>
                                             
 
                                             </Select>
@@ -965,7 +1062,7 @@ const changeTest6 = (event) => {
                                                 <em>None</em>
                                               </MenuItem>
                                               <MenuItem value={1}>homme</MenuItem>
-                                              <MenuItem value={2}>famme</MenuItem>
+                                              <MenuItem value={2}>femme</MenuItem>
                                             
 
                                             </Select>
@@ -1112,6 +1209,25 @@ const changeTest6 = (event) => {
 
                     
             </Dialog>
+
+
+            <Dialog open={openDelete}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={deleteExamenClose}
+                                    aria-describedby="alert-dialog-slide-description"
+                                  >
+                                    <DialogTitle>{"Confirmer la suppression d'un examen"}</DialogTitle>
+                                    <DialogContent>
+                                      <DialogContentText id="alert-dialog-slide-description">
+                                      Êtes-vous sûr de la décision de supprimer l'examen ?
+                                      </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                      <Button onClick={deleteExamenClose}>Anuller</Button>
+                                      <Button onClick={deleteConfirmation}>Supprimer</Button>
+                                    </DialogActions>
+                      </Dialog>
 
 
         

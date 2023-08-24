@@ -13,7 +13,6 @@ export async function getAllExamenOfYear(token, month, year){
     );
     const text = await response.text();
     if (response.status === 200) {
-      console.log(JSON.parse(text));
       return JSON.parse(text);
     } else {
       console.log("failed", text);
@@ -120,4 +119,31 @@ export async function getAllExamenOfYear(token, month, year){
             }
             
             };
+
+
+            export async function getStatestiques(token, month, year){
+              const response = await fetch(
+                  '/app/api/get_statestiques/' + month + '/' + year ,
+                  {
+                    method: 'GET',
+                    headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Token ' +token,
+                    },
+                    body: JSON.stringify()
+                  }
+              );
+              const text = await response.text();
+              if (response.status === 200) {
+                return JSON.parse(text);
+              } else {
+                console.log("failed", text);
+                return "no data";
+              }
+            
+            };
+          
+
+  
             

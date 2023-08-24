@@ -134,7 +134,7 @@ function DashboardContent() {
   const clickDashboard = () =>{
     
       setPage([true,false])
-      setToolBar("Statestiques")
+      setToolBar("Statestiques mensuelle")
   };
 
   const clickSortie= () =>{

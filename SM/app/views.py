@@ -7,6 +7,7 @@ from calendar import monthrange
 from .models import *
 from .serializers import ExamenSerializer
 from rest_framework import status
+from django.db.models import Q
 # Create your views here.
 
 @api_view(['GET'])
@@ -73,8 +74,6 @@ def createNewExemen(request):
         date_test[0] = d_t
         date_test[1] = m_t
 
-        print(date_naissance)
-        print(date_test)
         date_naissance = datetime.date(int(date_naissance[2]), int(date_naissance[1]), int(date_naissance[0]))
         date_test = datetime.date(int(date_test[2]), int(date_test[1]), int(date_test[0]))
 
@@ -165,9 +164,6 @@ def updateExamen(request, id):
 
         examen_to_update.save()
         
-
-        source = Exemen.objects.create(name = name, prenom = prenom, date_naissance=date_naissance, date_test=date_test, no_registre=no_registre, HIV_test=HIV_test, HBS_test=HBS_test, HCV_test=HCV_test, BW_test=BW_test, TOXOPLASME_test=TOXOPLASME_test, RUBIOLE_test=RUBIOLE_test, observation=observation, patient_genre=patient_genre)
-
         return Response(status=status.HTTP_200_OK, data = {"status":"Examen updated"})
     else:
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -194,3 +190,55 @@ def deleteExamen(request, id):
     if request.method == 'DELETE' and request.user.is_authenticated:
         Exemen.objects.filter(id=id).delete()
         return Response(status=status.HTTP_200_OK, data = {"status":"Examen deleted"})
+    
+
+
+@api_view(['GET'])
+def getStatestiques(request, month, year):
+    if request.method == 'GET' and request.user.is_authenticated:
+
+        range = monthrange(year, month)
+        date_start = datetime.date(year , month, 1)
+        date_end = datetime.date( year, month, range[1])
+
+        
+        total = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).count()
+        homme = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, patient_genre="Homme").count()
+        femme = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, patient_genre="Femme").count()
+        hiv_total = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).exclude(HIV_test="no").count()
+        hiv_p = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, HIV_test="p").count()
+        hbs_t = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).exclude(HBS_test="no").count()
+        hbs_p = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, HBS_test="p").count()
+        hcv_t = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).exclude(HCV_test="no").count()
+        hcv_p = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, HCV_test="p").count()
+        bw_t = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).exclude(BW_test="no").count()
+        bw_p = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, BW_test="p").count()
+        
+        
+        TOXOPLASME_t = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).exclude(TOXOPLASME_test="no").count()
+        TOXOPLASME_p = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, TOXOPLASME_test="p").count()
+        
+        RUBIOLE_t = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end).exclude(RUBIOLE_test="no").count()
+        RUBIOLE_p = Exemen.objects.filter(date_test__gte=date_start, date_test__lte=date_end, RUBIOLE_test="p").count()
+
+        return Response(status=status.HTTP_200_OK,
+                        data={
+                            "total":total,
+                            "femme":femme,
+                            "homme":homme,
+                            "hiv_t":hiv_total,
+                            "hiv_p":hiv_p,
+                            "hbs_t":hbs_t,
+                            "hbs_p":hbs_p,
+                            "hcv_t":hcv_t,
+                            "hcv_p":hcv_p,
+                            "bw_t":bw_t,
+                            "bw_p":bw_p,
+                            "to_t":TOXOPLASME_t,
+                            "to_p":TOXOPLASME_p,
+                            "ru_t":RUBIOLE_t,
+                            "ru_p":RUBIOLE_p,
+                            })
+                
+    else :
+        return Response(status=status.HTTP_401_UNAUTHORIZED) 

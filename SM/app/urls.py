@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/update_examen/<int:id>', views.updateExamen),
     path('api/delete_examen/<int:id>', views.deleteExamen),
     path('api/get_all_examen_of_year/<int:month>/<int:year>', views.getAllExamenOfYear),
+    path('api/get_statestiques/<int:month>/<int:year>', views.getStatestiques),
 
 ]
 
