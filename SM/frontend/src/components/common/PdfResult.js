@@ -85,7 +85,7 @@ export default function BonExamen(props){
             }else if(data.HIV_test == "n"){
                 setHiv("negative -");
             }else{
-                setHiv("         ");
+                setHiv("/////////");
             }
 
             if(data.HCV_test == "p"){
@@ -93,7 +93,7 @@ export default function BonExamen(props){
             }else if(data.HCV_test == "n"){
                  setHcv("negative -");
             }else{
-                setHcv("         ");
+                setHcv("/////////");
             }
 
             if(data.HBS_test == "p"){
@@ -101,7 +101,7 @@ export default function BonExamen(props){
             }else if(data.HBS_test == "n"){
                 setHbs("negative -");
             }else{
-                setHbs("         ");
+                setHbs("//////////");
             }
 
             if(data.BW_test == "p"){
@@ -109,7 +109,7 @@ export default function BonExamen(props){
             }else if(data.BW_test == "n"){
                 setBw("negative -");
             }else{
-                setBw("         ");
+                setBw("//////////");
             }
 
             if(data.RUBIOLE_test == "p"){
@@ -117,7 +117,7 @@ export default function BonExamen(props){
             }else if(data.RUBIOLE_test == "n"){
                 setRub("negative -");
             }else{
-                setRub("         ");
+                setRub("//////////");
             }
 
             if(data.TOXOPLASME_test == "p"){
@@ -125,7 +125,7 @@ export default function BonExamen(props){
             }else if(data.TOXOPLASME_test == "n"){
                 setToxo("negative -");
             }else{
-                setToxo("         ");
+                setToxo("//////////");
             }
         }
       },[data]);
