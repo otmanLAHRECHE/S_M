@@ -13,5 +13,6 @@ Web application for serological tests and exames management. the app contain:
 
 <img width="873" alt="Screenshot 2023-08-30 112108" src="https://github.com/otmanLAHRECHE/S_M/assets/30577764/e3cb16db-610f-4519-8819-1a0515afc587">
 
-<img width="485" alt="Screenshot 2023-08-30 112142" src="https://github.com/otmanLAHRECHE/S_M/assets/30577764/e2fa2334-5670-42a5-823f-4e11df72f0c1">
+<img width="485" alt="Screenshot 2023-08-30 112142" src="https://github.com/otmanLAHRECHE/S_M/assets/30577764/6299487c-853c-4b1f-84e0-59de7103b45a">
+
 
