@@ -155,6 +155,10 @@ export default function BonExamen(props){
       <Text style={styles.title}>BON D'EXAMEN</Text>
 
       <Text style={styles.author}>
+        N_registre : { data ? data.no_registre : null}                                             
+      </Text>
+
+      <Text style={styles.author}>
         Nom : { data ? data.name : null}                                                            Date de naissance: { data ? data.date_naissance : null}
       </Text>
 
