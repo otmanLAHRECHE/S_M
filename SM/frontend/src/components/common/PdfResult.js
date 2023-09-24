@@ -135,9 +135,9 @@ export default function BonExamen(props){
             }
 
             if(data.observation == ""){
-              setObs("Pas d'observation.");
+              setObs("");
           }else{
-            setObs(data.observation);
+            setObs("Observation:  " + data.observation);
           }
         }
       },[data]);
@@ -199,7 +199,7 @@ export default function BonExamen(props){
 
 
       <Text style={styles.author3}>
-        Observation:  { obs ? obs : null}   
+       { obs ? obs : null}   
       </Text>
 
       <Text style={styles.author}>
