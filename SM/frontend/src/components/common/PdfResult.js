@@ -14,6 +14,7 @@ export default function BonExamen(props){
   const [bw, setBw] = React.useState();
   const [toxo, setToxo] = React.useState();
   const [rub, setRub] = React.useState();
+  const [obs, setObs] = React.useState();
 
     const styles = StyleSheet.create({
         body: {
@@ -60,6 +61,11 @@ export default function BonExamen(props){
             fontSize: 11,
             marginBottom: 50,
             marginLeft: 8
+          },
+          author3: {
+            fontSize: 11,
+            marginBottom: 25,
+            textAlign: 'center',
           },
       });
 
@@ -127,6 +133,12 @@ export default function BonExamen(props){
             }else{
                 setToxo("//////////");
             }
+
+            if(data.observation == ""){
+              setObs("Pas d'observation.");
+          }else{
+            setObs(data.observation);
+          }
         }
       },[data]);
 
@@ -185,6 +197,10 @@ export default function BonExamen(props){
         BW : { bw ? bw : null}                  
       </Text>
 
+
+      <Text style={styles.author3}>
+        Observation:  { obs ? obs : null}   
+      </Text>
 
       <Text style={styles.author}>
         .                                                                                Djanet le : ........................

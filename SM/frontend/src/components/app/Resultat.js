@@ -9,7 +9,7 @@ export default function Resultat(){
 
 
   return (
-    <PDFViewer>
+    <PDFViewer width="1000" height="1200">
       <BonExamen id={state.id}/>
     </PDFViewer>
   );
